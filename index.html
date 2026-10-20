@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Personal Expense Tracker</title>
+
+    <!-- Bootstrap 5 -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar navbar-expand-lg dashboard-navbar">
+
+        <div class="container">
+
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-wallet2"></i>
+                Expense<span>Tracker</span>
+            </a>
+
+            <div class="d-flex align-items-center gap-2">
+
+                <button
+                    id="themeToggle"
+                    class="theme-btn"
+                    title="Toggle Dark Mode"
+                >
+                    <i class="bi bi-moon-fill"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero-section">
+
+        <div class="container">
+
+            <div class="hero-content">
+
+                <div>
+
+                    <p class="hero-label">
+                        PERSONAL FINANCE DASHBOARD
+                    </p>
+
+                    <h1>
+                        Take control of your
+                        <span>spending.</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        Track your expenses, understand your spending habits
+                        and manage your monthly budget — all in one place.
+                    </p>
+
+                </div>
+
+                <div class="hero-icon">
+
+                    <i class="bi bi-bar-chart-line-fill"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container main-container">
+
+
+        <!-- ================= SUMMARY CARDS ================= -->
+
+        <div class="row g-4 summary-row">
+
+            <div class="col-md-6 col-xl-3">
+
+                <div class="summary-card total-card">
+
+                    <div class="summary-icon">
+                        <i class="bi bi-cash-stack"></i>
+                    </div>
+
+                    <div>
+
+                        <p>Total Spent</p>
+
+                        <h3 id="totalAmount">
+                            ₹0.00
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-xl-3">
+
+                <div class="summary-card count-card">
+
+                    <div class="summary-icon">
+                        <i class="bi bi-receipt"></i>
+                    </div>
+
+                    <div>
+
+                        <p>Transactions</p>
+
+                        <h3 id="expenseCount">
+                            0
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-xl-3">
+
+                <div class="summary-card average-card">
+
+                    <div class="summary-icon">
+                        <i class="bi bi-calculator"></i>
+                    </div>
+
+                    <div>
+
+                        <p>Average Expense</p>
+
+                        <h3 id="averageAmount">
+                            ₹0.00
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-xl-3">
+
+                <div class="summary-card highest-card">
+
+                    <div class="summary-icon">
+                        <i class="bi bi-arrow-up-circle"></i>
+                    </div>
+
+                    <div>
+
+                        <p>Highest Expense</p>
+
+                        <h3 id="highestAmount">
+                            ₹0.00
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= DASHBOARD GRID ================= -->
+
+        <div class="row g-4 mt-1">
+
+
+            <!-- ================= ADD EXPENSE ================= -->
+
+            <div class="col-lg-7">
+
+                <div class="dashboard-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <p class="small-label">
+                                TRANSACTION
+                            </p>
+
+                            <h2 id="formTitle">
+                                Add New Expense
+                            </h2>
+
+                        </div>
+
+                        <div class="heading-icon">
+                            <i class="bi bi-plus-lg"></i>
+                        </div>
+
+                    </div>
+
+
+                    <form id="expenseForm">
+
+                        <input
+                            type="hidden"
+                            id="expenseId"
+                        >
+
+
+                        <div class="mb-3">
+
+                            <label for="expenseName">
+                                Expense Name
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+                                    <i class="bi bi-pencil"></i>
+                                </span>
+
+                                <input
+                                    type="text"
+                                    id="expenseName"
+                                    class="form-control"
+                                    placeholder="e.g. Lunch, Shopping, Travel"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+
+                                <label for="amount">
+                                    Amount
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        ₹
+                                    </span>
+
+                                    <input
+                                        type="number"
+                                        id="amount"
+                                        class="form-control"
+                                        placeholder="0.00"
+                                        min="1"
+                                        step="0.01"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-6 mb-3">
+
+                                <label for="category">
+                                    Category
+                                </label>
+
+                                <select
+                                    id="category"
+                                    class="form-select"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select Category
+                                    </option>
+
+                                    <option value="Food">
+                                        🍔 Food
+                                    </option>
+
+                                    <option value="Transport">
+                                        🚌 Transport
+                                    </option>
+
+                                    <option value="Shopping">
+                                        🛍️ Shopping
+                                    </option>
+
+                                    <option value="Education">
+                                        📚 Education
+                                    </option>
+
+                                    <option value="Entertainment">
+                                        🎬 Entertainment
+                                    </option>
+
+                                    <option value="Bills">
+                                        💡 Bills
+                                    </option>
+
+                                    <option value="Health">
+                                        ❤️ Health
+                                    </option>
+
+                                    <option value="Other">
+                                        📦 Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="mb-4">
+
+                            <label for="date">
+                                Date
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+                                    <i class="bi bi-calendar3"></i>
+                                </span>
+
+                                <input
+                                    type="date"
+                                    id="date"
+                                    class="form-control"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="d-flex gap-2 flex-wrap">
+
+                            <button
+                                type="submit"
+                                class="btn primary-btn"
+                                id="submitBtn"
+                            >
+                                <i class="bi bi-plus-circle"></i>
+                                Add Expense
+                            </button>
+
+                            <button
+                                type="button"
+                                class="btn cancel-btn"
+                                id="cancelEdit"
+                                style="display: none;"
+                            >
+                                Cancel Edit
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= BUDGET ================= -->
+
+            <div class="col-lg-5">
+
+                <div class="dashboard-card budget-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <p class="small-label">
+                                MONTHLY PLANNER
+                            </p>
+
+                            <h2>
+                                Budget
+                            </h2>
+
+                        </div>
+
+                        <div class="heading-icon">
+                            <i class="bi bi-bullseye"></i>
+                        </div>
+
+                    </div>
+
+
+                    <div class="budget-input">
+
+                        <label for="budget">
+                            Set Monthly Budget
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                ₹
+                            </span>
+
+                            <input
+                                type="number"
+                                id="budget"
+                                class="form-control"
+                                placeholder="Enter budget"
+                                min="1"
+                            >
+
+                            <button
+                                class="btn budget-btn"
+                                id="saveBudget"
+                            >
+                                Save
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="budget-info">
+
+                        <div>
+
+                            <span>Spent</span>
+
+                            <strong id="budgetSpent">
+                                ₹0
+                            </strong>
+
+                        </div>
+
+                        <div class="text-end">
+
+                            <span>Budget</span>
+
+                            <strong id="budgetTotal">
+                                ₹0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress budget-progress">
+
+                        <div
+                            id="budgetProgress"
+                            class="progress-bar"
+                            role="progressbar"
+                            style="width: 0%"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <p
+                        id="budgetMessage"
+                        class="budget-message"
+                    >
+                        Set a budget to start tracking your progress.
+                    </p>
+
+                </div>
+
+
+                <!-- INSIGHT -->
+
+                <div class="insight-card">
+
+                    <div class="insight-icon">
+                        <i class="bi bi-lightbulb-fill"></i>
+                    </div>
+
+                    <div>
+
+                        <h5>Smart Insight</h5>
+
+                        <p id="insightText">
+                            Add some expenses to receive a spending insight.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= ANALYTICS ================= -->
+
+        <div class="row g-4 mt-1">
+
+
+            <!-- CATEGORY CHART -->
+
+            <div class="col-lg-5">
+
+                <div class="dashboard-card chart-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <p class="small-label">
+                                ANALYTICS
+                            </p>
+
+                            <h2>
+                                Spending Breakdown
+                            </h2>
+
+                        </div>
+
+                        <i class="bi bi-pie-chart-fill chart-title-icon"></i>
+
+                    </div>
+
+
+                    <div class="chart-area">
+
+                        <div
+                            id="categoryChart"
+                            class="donut-chart"
+                        >
+
+                            <div class="chart-center">
+
+                                <strong id="chartTotal">
+                                    ₹0
+                                </strong>
+
+                                <span>Total</span>
+
+                            </div>
+
+                        </div>
+
+                        <div
+                            id="categoryLegend"
+                            class="category-legend"
+                        >
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUICK STATS -->
+
+            <div class="col-lg-7">
+
+                <div class="dashboard-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <p class="small-label">
+                                QUICK OVERVIEW
+                            </p>
+
+                            <h2>
+                                Spending Habits
+                            </h2>
+
+                        </div>
+
+                        <i class="bi bi-activity chart-title-icon"></i>
+
+                    </div>
+
+
+                    <div class="habit-list">
+
+                        <div class="habit-item">
+
+                            <div class="habit-icon">
+                                <i class="bi bi-trophy"></i>
+                            </div>
+
+                            <div>
+
+                                <span>Top Spending Category</span>
+
+                                <strong id="topCategory">
+                                    No data yet
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="habit-item">
+
+                            <div class="habit-icon">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+
+                            <div>
+
+                                <span>Most Recent Expense</span>
+
+                                <strong id="recentExpense">
+                                    No data yet
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="habit-item">
+
+                            <div class="habit-icon">
+                                <i class="bi bi-cash-coin"></i>
+                            </div>
+
+                            <div>
+
+                                <span>Largest Transaction</span>
+
+                                <strong id="largestExpense">
+                                    No data yet
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= TRANSACTIONS ================= -->
+
+        <div class="dashboard-card transactions-card mt-4">
+
+            <div class="card-heading transaction-heading">
+
+                <div>
+
+                    <p class="small-label">
+                        TRANSACTION HISTORY
+                    </p>
+
+                    <h2>
+                        Your Expenses
+                    </h2>
+
+                </div>
+
+
+                <div class="action-buttons">
+
+                    <button
+                        id="exportBtn"
+                        class="btn export-btn"
+                    >
+                        <i class="bi bi-download"></i>
+                        Export CSV
+                    </button>
+
+                    <button
+                        id="clearAll"
+                        class="btn clear-btn"
+                    >
+                        <i class="bi bi-trash3"></i>
+                        Clear All
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- SEARCH + FILTER -->
+
+            <div class="filter-row">
+
+                <div class="search-box">
+
+                    <i class="bi bi-search"></i>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search expenses..."
+                    >
+
+                </div>
+
+
+                <select
+                    id="filterCategory"
+                    class="form-select filter-select"
+                >
+
+                    <option value="All">
+                        All Categories
+                    </option>
+
+                    <option value="Food">
+                        Food
+                    </option>
+
+                    <option value="Transport">
+                        Transport
+                    </option>
+
+                    <option value="Shopping">
+                        Shopping
+                    </option>
+
+                    <option value="Education">
+                        Education
+                    </option>
+
+                    <option value="Entertainment">
+                        Entertainment
+                    </option>
+
+                    <option value="Bills">
+                        Bills
+                    </option>
+
+                    <option value="Health">
+                        Health
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+
+                <select
+                    id="sortExpenses"
+                    class="form-select filter-select"
+                >
+
+                    <option value="newest">
+                        Newest First
+                    </option>
+
+                    <option value="oldest">
+                        Oldest First
+                    </option>
+
+                    <option value="high">
+                        Amount: High → Low
+                    </option>
+
+                    <option value="low">
+                        Amount: Low → High
+                    </option>
+
+                    <option value="name">
+                        Name: A → Z
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- TABLE -->
+
+            <div class="table-responsive">
+
+                <table class="table expense-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Expense</th>
+
+                            <th>Amount</th>
+
+                            <th>Category</th>
+
+                            <th>Date</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="expenseTableBody">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- EMPTY STATE -->
+
+            <div
+                id="emptyMessage"
+                class="empty-state"
+            >
+
+                <div class="empty-icon">
+                    <i class="bi bi-receipt-cutoff"></i>
+                </div>
+
+                <h4>No expenses yet</h4>
+
+                <p>
+                    Start by adding your first expense above.
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= TOAST ================= -->
+
+    <div
+        class="toast-container position-fixed bottom-0 end-0 p-4"
+    >
+
+        <div
+            id="appToast"
+            class="toast"
+            role="alert"
+        >
+
+            <div class="toast-body">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                <span id="toastMessage">
+                    Expense added successfully!
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="container">
+
+            <p>
+                <i class="bi bi-wallet2"></i>
+                Personal Expense Tracker
+            </p>
+
+            <small>
+                Built using HTML, CSS, JavaScript, jQuery & Bootstrap 5
+            </small>
+
+        </div>
+
+    </footer>
+
+
+    <!-- jQuery -->
+
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.min.js">
+    </script>
+
+
+    <!-- Bootstrap JS -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+
+    <!-- Custom JS -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
